@@ -1,0 +1,29 @@
+public abstract class Vehicle {
+    private double pricePerHour;
+    private double earlyPrice;
+    private boolean isEarly;
+
+    public double getPricePerHour() {
+        return pricePerHour;
+    }
+
+    public void setPricePerHour(double pricePerHour) {
+        this.pricePerHour = pricePerHour;
+    }
+
+    public double getEarlyPrice() {
+        return earlyPrice;
+    }
+
+    public void setEarlyPrice(double earlyPrice) {
+        this.earlyPrice = earlyPrice;
+    }
+
+    public boolean isEarly() {
+        return isEarly;
+    }
+
+    public void setEarly(boolean early) {
+        isEarly = early;
+    }
+}
