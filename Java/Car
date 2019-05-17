@@ -1,0 +1,12 @@
+package com.example.parkinggaragefinalcse248;
+
+public class Car extends Vehicle{
+    private double pricePerHour =2.5;
+    private double earlyPrice =20;
+    private boolean isEarly;
+
+    public Car() {
+        setPricePerHour(pricePerHour);
+        setEarlyPrice(earlyPrice);
+    }
+}
