@@ -1,0 +1,35 @@
+public class ParkingSpot{
+
+    private String plate;
+    private Date date;
+    private Vehicle vehicle;
+
+    public ParkingSpot(String plate, Vehicle vehicle) {
+        this.plate = plate;
+        this.vehicle = vehicle;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+}
