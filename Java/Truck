@@ -1,6 +1,8 @@
 package com.example.parkinggaragefinalcse248;
 
-public class Truck extends Vehicle{
+import java.io.Serializable;
+
+public class Truck extends Vehicle implements Serializable {
     private double pricePerHour =5;
     private double earlyPrice =40;
     private boolean isEarly;
