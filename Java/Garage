@@ -2,10 +2,11 @@ package com.example.parkinggaragefinalcse248;
 
 import android.os.Build;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Garage {
+public class Garage implements Serializable {
     private int carCount = 0;
     private int motorCount = 0;
     private int truckCount = 0;
@@ -13,6 +14,30 @@ public class Garage {
     private ArrayList<ParkingSpot> carList = new ArrayList<>();
     private ArrayList<ParkingSpot> motorList = new ArrayList<>();
     private ArrayList<ParkingSpot> truckList = new ArrayList<>();
+
+    public int getCarCount() {
+        return carCount;
+    }
+
+    public void setCarCount(int carCount) {
+        this.carCount = carCount;
+    }
+
+    public int getMotorCount() {
+        return motorCount;
+    }
+
+    public void setMotorCount(int motorCount) {
+        this.motorCount = motorCount;
+    }
+
+    public int getTruckCount() {
+        return truckCount;
+    }
+
+    public void setTruckCount(int truckCount) {
+        this.truckCount = truckCount;
+    }
 
     public String addCar(String plate, Boolean early){
         if(carCount == 10){
@@ -108,8 +133,5 @@ public class Garage {
         }
 
         return price * parkingSpot.getVehicle().getPricePerHour();
-
     }
-
-
 }
