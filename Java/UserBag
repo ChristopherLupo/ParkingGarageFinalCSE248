@@ -1,0 +1,112 @@
+package com.example.parkinggaragefinalcse248;
+
+import java.io.Serializable;
+
+
+public class UserBag implements Serializable{
+    private Node root;
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
+    }
+
+    public void add(User user) {
+        Node newNode = new Node();
+        newNode.setUser(user);
+
+        if (root == null) {
+            root = newNode;
+        } else {
+            Node current = root;
+            Node parent;
+            while (true) {
+                parent = current;
+                if (current.getUser().getUsername().compareTo(newNode.getUser().getUsername()) > 0) {
+                    current = current.getLeftChild();
+                    if (current == null) {
+                        parent.setLeftChild(newNode);
+                        return;
+                    }
+                } else {
+                    current = current.getRightChild();
+                    if (current == null) {
+                        parent.setRightChild(newNode);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    public void display() {
+        display(root);
+
+    }
+
+    public void display(Node localRoot) {
+        if (localRoot != null) {
+            display(localRoot.getLeftChild());
+            System.out.println(localRoot.getUser().toString());
+            display(localRoot.getRightChild());
+        }
+    }
+
+    public boolean searchAccount(String username) {
+        Node current = root;
+        while (current.getUser().getUsername().compareTo(username) != 0
+                && current.getUser().getUsername().equals(username) != true) {
+            if (current.getUser().getUsername().compareTo(username) > 0) {
+                current = current.getLeftChild();
+            } else {
+                current = current.getRightChild();
+            }
+            if (current == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean searchAccount(String username, String password) {
+        Node current = root;
+        while (current.getUser().getUsername().compareTo(username) != 0
+                && current.getUser().getUsername().equals(username) != true) {
+            if (current.getUser().getUsername().compareTo(username) > 0) {
+                current = current.getLeftChild();
+            } else {
+                current = current.getRightChild();
+            }
+            if (current == null) {
+                return false;
+            }
+        }
+
+        if (current.getUser().getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addUser(String username, String password) {
+
+        if(username.equals("")) {
+            return false;
+        } else if(password.equals("")){
+            return false;
+        }else if(root == null){
+            this.add(new User(username, password));
+            return true;
+        } else if(searchAccount(username) == true) {
+            return false;
+        }
+
+        this.add(new User(username, password));
+
+        return true;
+
+    }
+}
