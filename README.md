@@ -13,3 +13,6 @@ I thought the garage would take me about 5 hours becasue of the diffenent vehicl
 
 The main was origionally planed to only take about an hour, but took me about five. The reason is becasuse of the of the problems I had making user the android UI.
 
+The vehicle abstract class took me about 20 minutes to write and the 3 subclasses took about 5 minutes each.
+
+The only issue is that the add truck and add motorcycle buttons don't work
