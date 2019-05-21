@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,81 +35,182 @@ public class MainActivity extends AppCompatActivity {
             bag.add(new User("Mr.Test","password"));
         }
 
-        final TextView textView = findViewById(R.id.startScreen);
-        Button login = findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { setContentView(R.layout.login);
-            }
-        });
+        final TextView textView = findViewById(R.id.displayMessage);
+        final Button signUp = findViewById(R.id.signUp);
+        final Button login = findViewById(R.id.login);
+        final EditText username = findViewById(R.id.username);
+        final EditText password = findViewById(R.id.password);
 
-        Button signUp = findViewById(R.id.signUp);
+        final EditText license = findViewById(R.id.licensePlate);
+        license.setEnabled(false);
+
+        final RadioButton early = findViewById(R.id.earlyBird);
+        early.setEnabled(false);
+
+        final Button addCar = findViewById(R.id.addCar);
+        addCar.setEnabled(false);
+        final Button addTruck = findViewById(R.id.addTruck);
+        addTruck.setEnabled(false);
+        final Button addMotorcycle = findViewById(R.id.addMotorcycle);
+        addMotorcycle.setEnabled(false);
+
+        final Button remove = findViewById(R.id.remove);
+        remove.setEnabled(false);
+
+        final Button signOut = findViewById(R.id.signOut);
+        signOut.setEnabled(false);
+
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.sign_up);
+                if(bag.addUser(username.getText().toString(), password.getText().toString())== true){
+                    save();
+                    textView.setText("Sign Up successful, Please add and/or remove vehcles");
+                    signUp.setEnabled(false);
+                    login.setEnabled(false);
+                    username.setText("");
+                    username.setEnabled(false);
+                    password.setText("");
+                    password.setEnabled(false);
+
+                    license.setEnabled(true);
+                    early.setEnabled(true);
+                    addCar.setEnabled(true);
+                    addMotorcycle.setEnabled(true);
+                    addTruck.setEnabled(true);
+                    remove.setEnabled(true);
+                    signOut.setEnabled(true);
+                }else{
+                    if(username.getText().toString().equals("") || password.getText().toString().equals("")){
+                        textView.setText("Please fill in both Username and Password");
+                    } else{
+                        textView.setText("That Username is already in use please use the differnt one");
+                    }
+                }
             }
         });
 
-//        Button signUpScreen = findViewById(R.id.signupScreen);
-//        signUpScreen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText username = findViewById(R.id.usernameMaker);
-//                EditText password = findViewById(R.id.passwordMaker);
-//                if(bag.addUser(username.getText().toString(), password.getText().toString())== true){
-//                    setContentView(R.layout.garage);
-//                    save();
-//                }else{
-//                    if(username.getText().toString().equals("") || password.getText().toString().equals("")){
-//                        TextView signupView = findViewById(R.id.signupView);
-//                        signupView.setText("Please fill in both Username and Password");
-//                    } else{
-//                        TextView signupView = findViewById(R.id.signupView);
-//                        signupView.setText("That Username is already in use please use the differnt one");
-//                    }
-//                }
-//            }
-//        });
-
-
-        Button loginScreen = findViewById(R.id.loginScreen);
-        loginScreen.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-        }});
+                if(bag.searchAccount(username.getText().toString(), password.getText().toString())== true){
+                    textView.setText("Login successful, Please add and/or remove vehcles");
 
-//            @Override
-//            public void onClick(View v) {
-//                EditText username = findViewById(R.id.usernameCheck);
-//                EditText password = findViewById(R.id.passwordCheck);
-//                if(bag.searchAccount(username.getText().toString(), password.getText().toString())== true){
-//                    setContentView(R.layout.garage);
-//                }else{
-//                    if(username.getText().toString().equals("") || password.getText().toString().equals("")){
-//                        TextView signupView = findViewById(R.id.loginView);
-//                        signupView.setText("Please fill in both Username and Password");
-//                    } else{
-//                        TextView signupView = findViewById(R.id.loginView);
-//                        signupView.setText("That Username is already in use please use the differnt one");
-//                    }
-//                }
-//            }
-//        });
+                    signUp.setEnabled(false);
+                    login.setEnabled(false);
+                    username.setText("");
+                    username.setEnabled(false);
+                    password.setText("");
+                    password.setEnabled(false);
 
-//
-//        garage.addCar("HiMom", false);
-//        save();
+                    license.setEnabled(true);
+                    early.setEnabled(true);
+                    addCar.setEnabled(true);
+                    addMotorcycle.setEnabled(true);
+                    addTruck.setEnabled(true);
+                    remove.setEnabled(true);
+                    signOut.setEnabled(true);
+                }else{
+                    if(username.getText().toString().equals("") || password.getText().toString().equals("")){
+                        textView.setText("Please fill in both Username and Password");
+                    } else{
+                        textView.setText("Either username or password is incorrect");
+                    }
+                }
+            }
+        });
 
-//        Intent intent = getIntent();
-//        TextView textView = findViewById(R.id.startScreen);
-//
-//        ParkingSpot p = g.removePlace("HiMom");
-//        Date date = new Date();
-//        date.setTime(new Date().getTime() - 3610000);
-//
-//        p.setDate(date);
-//
-//       textView.setText(g.price(p) + " "+ new Date().toString() +" "+ p.getDate().toString());
+        addCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(license.getText().toString().equals("")){
+                    textView.setText("Please enter a licene plate");
+                } else{
+                    if(garage.plateUsed(license.getText().toString()) == true){
+                        textView.setText("License already in use");
+                    }else {
+                        garage.addCar(license.getText().toString(), new Date().getTime(), early.isChecked());
+                        textView.setText("Your car was added to spot " + garage.findPlace(license.getText().toString()));
+                        license.setText("");
+                        early.setChecked(false);
+                        save();
+                    }
+                }
+            }
+        });
+
+        addMotorcycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(license.getText().toString().equals("")){
+                    textView.setText("Please enter a licene plate");
+                } else{
+                    if(garage.plateUsed(license.getText().toString()) == true){
+                        textView.setText("License already in use");
+                    }else {
+                        garage.addMotor(license.getText().toString(), new Date().getTime(), early.isChecked());
+                        textView.setText("Your motorcycle was added to spot " + garage.findPlace(license.getText().toString()));
+                        license.setText("");
+                        early.setChecked(false);
+                        save();
+                    }
+                }
+            }
+        });
+
+        addTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(license.getText().toString().equals("")){
+                    textView.setText("Please enter a licene plate");
+                } else{
+                    if(garage.plateUsed(license.getText().toString()) == true){
+                        textView.setText("License already in use");
+                    }else {
+                        garage.addTruck(license.getText().toString(), new Date().getTime(), early.isChecked());
+                        textView.setText("Your truck was added to spot " + garage.findPlace(license.getText().toString()));
+                        license.setText("");
+                        early.setChecked(false);
+                        save();
+                    }
+                }
+            }
+        });
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(license.getText().toString().equals("")){
+                    textView.setText("Please enter a licene plate");
+                } else{
+                    int spot = garage.findPlace(license.getText().toString());
+                    ParkingSpot parkingSpot = garage.removePlace(license.getText().toString());
+
+                    Date arrival = new Date();
+                    arrival.setTime(parkingSpot.getDate());
+                    textView.setText(parkingSpot.getVehicle().toString()+" ("+ parkingSpot.getPlate() + ") was removed from parking spot " + spot + ", and it was checked in at " + arrival.toString() +" and the total price is $" + garage.price(parkingSpot));
+                    license.setText("");
+                    save();
+                }
+            }
+        });
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signUp.setEnabled(true);
+                login.setEnabled(true);
+                username.setEnabled(true);
+                password.setEnabled(true);
+                license.setEnabled(false);
+                early.setEnabled(false);
+                addCar.setEnabled(false);
+                addTruck.setEnabled(false);
+                addMotorcycle.setEnabled(false);
+                remove.setEnabled(false);
+                signOut.setEnabled(false);}
+        });
     }
 
     public void save() {
