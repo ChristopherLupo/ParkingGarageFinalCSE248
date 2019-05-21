@@ -129,8 +129,9 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     if(garage.plateUsed(license.getText().toString()) == true){
                         textView.setText("License already in use");
-                    }else {
-                        garage.addCar(license.getText().toString(), new Date().getTime(), early.isChecked());
+                    }else if(garage.addCar(license.getText().toString(), new Date().getTime(), early.isChecked()) == false) {
+                        textView.setText("The garage has no empty car spaces");
+                    } else {
                         textView.setText("Your car was added to spot " + garage.findPlace(license.getText().toString()));
                         license.setText("");
                         early.setChecked(false);
@@ -148,8 +149,9 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     if(garage.plateUsed(license.getText().toString()) == true){
                         textView.setText("License already in use");
-                    }else {
-                        garage.addMotor(license.getText().toString(), new Date().getTime(), early.isChecked());
+                    }else if(garage.addMotor(license.getText().toString(), new Date().getTime(), early.isChecked()) == false) {
+                        textView.setText("The garage has no empty motorcycle spaces");
+                    } else {
                         textView.setText("Your motorcycle was added to spot " + garage.findPlace(license.getText().toString()));
                         license.setText("");
                         early.setChecked(false);
@@ -167,8 +169,9 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     if(garage.plateUsed(license.getText().toString()) == true){
                         textView.setText("License already in use");
-                    }else {
-                        garage.addTruck(license.getText().toString(), new Date().getTime(), early.isChecked());
+                    }else if(garage.addTruck(license.getText().toString(), new Date().getTime(), early.isChecked()) == false) {
+                        textView.setText("The garage has no empty truck spaces");
+                    } else {
                         textView.setText("Your truck was added to spot " + garage.findPlace(license.getText().toString()));
                         license.setText("");
                         early.setChecked(false);
@@ -209,7 +212,10 @@ public class MainActivity extends AppCompatActivity {
                 addTruck.setEnabled(false);
                 addMotorcycle.setEnabled(false);
                 remove.setEnabled(false);
-                signOut.setEnabled(false);}
+                signOut.setEnabled(false);
+                
+                textView.setText("Please login or sign up");
+            }
         });
     }
 
